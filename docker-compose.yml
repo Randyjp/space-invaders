@@ -3,5 +3,8 @@ console:
   command: python app.py
 #  ports:
 #   - "5000:5000"
+  environment:
+    - DISPLAY=unix$DISPLAY
   volumes:
    - .:/src
+   - /tmp/.X11-unix:/tmp/.X11-unix
