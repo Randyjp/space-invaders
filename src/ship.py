@@ -15,6 +15,17 @@ class Ship:
         self.rect.centerx = self.screen_rect.centerx  # match screen's center x
         self.rect.bottom = self.screen_rect.bottom  # match screen's bottom
 
+        # Movement flags
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        """Update our ship's position based the movements flags"""
+        if self.moving_right:
+            self.rect.centerx += 1
+        elif self.moving_left:
+            self.rect.centerx -= 1
+
     def blitme(self):
         """Draw the ship at its current location"""
         self.screen.blit(self.image, self.rect)
