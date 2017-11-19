@@ -131,9 +131,24 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     if spritecollideany(ship, aliens):
         ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
+    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+
+
+def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+
+    if stats.ships_left > 0:
+        for alien in aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+                break
+    else:
+        stats.game_active = False
+
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     """"Responds to a ship being hit"""
+
     # Subtract one from ships
     stats.ships_left -= 1
     # Destroy existing aliens
