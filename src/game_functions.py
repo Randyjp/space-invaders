@@ -3,7 +3,7 @@ import pygame
 
 from bullet import Bullet
 from alien import Alien
-
+from pygame.sprite import groupcollide
 
 def check_keydown_event(event, ai_settings, screen, ship, bullets):
     """Responds to key press"""
@@ -56,9 +56,12 @@ def update_screen(ai_settings, screen, ship, aliens, bullets):
     pygame.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets):
     """"Updates bullet's position and get rid of old ones"""
     bullets.update()
+
+    # look for collitions amoung aliens and bullets
+    collisions = groupcollide(aliens, bullets, True, True)
 
     # Delete used bullets
     for bullet in bullets.copy():
