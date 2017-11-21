@@ -30,7 +30,7 @@ def check_keyup_event(event, ship):
         ship.moving_left = False
 
 
-def check_events(ai_settings, screen, stats, play_button, ship, bullets):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """Watch for keyboard and mouse events."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -38,7 +38,7 @@ def check_events(ai_settings, screen, stats, play_button, ship, bullets):
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(stats, play_button, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
         elif event.type == pygame.KEYDOWN:
             check_keydown_event(event, ai_settings, screen, ship, bullets)
@@ -47,10 +47,25 @@ def check_events(ai_settings, screen, stats, play_button, ship, bullets):
             check_keyup_event(event, ship)
 
 
-def check_play_button(stats, play_button, mouse_x, mouse_y):
+def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """Start a new game when the player click the button"""
-    if play_button.rect.collidepoint(mouse_x, mouse_y):
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        # Reset variables to make game playable again
+        stats.reset_stats()
         stats.game_active = True
+
+        # Clear groups
+        aliens.remove()
+        bullets.remove()
+
+        # Build new fleet
+        create_fleet(ai_settings, screen, ship, aliens)
+        # Center ship
+        ship.center_ship()
+
+        # Hide the mouse cursor
+        pygame.mouse.set_visible(False)
 
 
 def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
@@ -67,6 +82,7 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
     # Draw the button if the game is inactive
     if not stats.game_active:
         play_button.draw_button()
+        pygame.mouse.set_visible(True)
 
     # Make the most recently drawn screen visible.
     pygame.display.flip()
