@@ -59,6 +59,9 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         aliens.remove()
         bullets.remove()
 
+        # reset the game settings to normal
+        ai_settings.initilize_dynamic_settings()
+
         # Build new fleet
         create_fleet(ai_settings, screen, ship, aliens)
         # Center ship
@@ -201,5 +204,7 @@ def check_bullet_collision(ai_settings, screen, ship, aliens, bullets):
     if len(aliens) == 0:
         # Destroy bullets
         bullets.empty()
+        # Increase game speed
+        ai_settings.increase_speed()
         # Create new alien fleet
         create_fleet(ai_settings, screen, ship, aliens)
