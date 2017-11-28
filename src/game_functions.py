@@ -59,6 +59,7 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens,
         sb.prep_score()
         sb.prep_high_score()
         sb.prep_level()
+        sb.prep_ships()
 
         # Clear groups
         aliens.remove()
@@ -164,30 +165,30 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """""Check if the fleet is at an edge, and then update alien's postion"""
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
 
     if spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
     screen_rect = screen.get_rect()
 
     if stats.ships_left > 0:
         for alien in aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
-                ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+                ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
                 break
     else:
         stats.game_active = False
 
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """"Responds to a ship being hit"""
 
     # Subtract one from ships
@@ -200,6 +201,8 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     create_fleet(ai_settings, screen, ship, aliens)
     # reposition the ship in the middle of screen
     ship.center_ship()
+    # Update scoreboard
+    sb.prep_ships()
     # pause for half second
     sleep(0.5)
 
