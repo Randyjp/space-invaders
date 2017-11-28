@@ -7,14 +7,15 @@ from alien import Alien
 from pygame.sprite import groupcollide, spritecollideany
 
 
-def check_keydown_event(event, ai_settings, screen, ship, bullets):
+def check_keydown_event(event, ai_settings, stats, screen, ship, bullets):
     """Responds to key press"""
     if event.key == pygame.K_RIGHT:
         # move the ship to the right
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
-    elif event.key == pygame.K_SPACE and len(bullets) < ai_settings.bullet_allowed:
+    elif event.key == pygame.K_SPACE and len(bullets) < ai_settings.bullet_allowed \
+            and stats.game_active:
         # New bullet, goes to the bullet group
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
@@ -41,7 +42,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
             check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
         elif event.type == pygame.KEYDOWN:
-            check_keydown_event(event, ai_settings, screen, ship, bullets)
+            check_keydown_event(event, ai_settings, stats, screen, ship, bullets)
 
         elif event.type == pygame.KEYUP:
             check_keyup_event(event, ship)
