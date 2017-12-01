@@ -1,4 +1,4 @@
-# Project Title
+# Space Invaders
 
 Recreation of the classic Space Invaders game, made following the instruction contained in the book Python Crash Course. 
 This was a toy project with the intention of brushing up some of my Python3 skills and by no means contains all the 
@@ -6,77 +6,49 @@ features included in the  original game.
 
 ## Getting Started
 
-At its current state, the project only runs on linux machines, this is a result of the way docker
+At its current state, the project runs only on linux machines, this is a result of the way docker
 interacts with the video drivers of the the host computer. For the most part, you only need to
 download the project files and run the commands contained in the installing section. 
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You need to install the Docker daemon and Docker compose in order to run the game. For instructions
+on how to install them, follow the links below:
 
-```
-Give examples
-```
+* [Docker](https://docs.docker.com/engine/installation/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+There's two steps to have the game up and running. From the root of the project: 
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+* Build the Docker image from the Docker file: 
 
 ```
-until finished
+docker build -t yourname/spaceinvaders .
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+* Run compose: 
 
 ```
-Give an example
+docker-compose build
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+* Fire up your docker container: 
 
 ```
-Give an example
+docker-compose up
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [Docker](https://www.docker.com/) - Container manager
+* [Pygame](https://www.pygame.org/) - Gaming Library for Python
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Randy Perez**
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -84,8 +56,3 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
